@@ -1,19 +1,7 @@
 $(window).on( "load", function() { //make sure window has finished loading
 
 
-var game = {
-
-// var totalQuestions = 10;
-// var correctAnswers = 0;
-// var incorrectAnswers = 0;
-// var msgOutOfTime = ["You've run out of time!", "Time's Up!", "Did you fall asleep?"];
-// var msgIncorrectResponse = ["Incorrect!", "Wrong answer!", "Not even close!"];
-// var msgCorrectResponse = ["Congratulations!", "You got it!", "What a master!"];
-// var triviaObjectArray = [];
-// var questionTimer = 30;
-// var answerTimer = 5;
-// var qInterval = 0;
-// var questionNbr = 0;
+var game = {  //All game components are stored in an object
 
 
 totalQuestions: 5,
@@ -94,41 +82,26 @@ question5: {
 
 },
 
-
-// var question1 = {
-
-// 	question = "What was the original color of Oscar the Grouch?";
-// 	answerChoices = ["Blue", "Green", "Orange", "Yellow"];
-// 	answer = 2;
-// 	imgSrc = "assets/images/Oscar.jpg";
-
-// 	correctAns: function() {
-// 		return this.answerChoices[answer];
-// 	};
-
-// };
-
-
 //function to start game
-
 start: function() {
 
-	console.log("Game Started");
 	game.createQuestionArray();
 	game.displayQuestion();
 },
 
+//function to reset the timer before new question
 resetTimer: function() {
 
 	game.questionTimer = 30;
 },
 
+//function to clear content from screen before new content loads
 resetDisplay: function() {
 
 	$("#gameContainer").empty();
 },
-//function to reset game
 
+//function to reset game and play again
 resetGame: function() {
 	game.correctAnswers = 0;
 	game.incorrectAnswers = 0;
@@ -137,25 +110,19 @@ resetGame: function() {
 	game.endOfRndMessage = "";
 	game.triviaObjectArray = [];
 	game.resetDisplay();
-	$("#gameContainer").append("<div id='startBtn'><button id='start'>Start</button></div>");
+	$("#gameContainer").append("<div id='startBtn' class='col-md-12'><button id='start' class='btn btn-success'>START</button></div>");
   	$("#start").on("click", game.start);
 
 
 },
-//constructor to create question objects
 
-// triviaObject: function(q, ) {
-
-
-// },
-
-//function to create question objects and feed into array
+//function to feed question objects into array
 createQuestionArray: function() {
 
 	game.triviaObjectArray.push(game.question1, game.question2, game.question3, game.question4, game.question5);
 },
-//function to select next question
 
+//function to select next question, or end game if no more questions
 nextQuestion: function() {
 	game.resetMessage();
 
@@ -168,60 +135,44 @@ nextQuestion: function() {
 	}
 },
 
-//function to display question and answer choices
+//function to display question and answer choices, and start question timer
 displayQuestion: function() {
 
-	console.log("Next Question");
 	game.resetDisplay();
 	game.startQCountDown();
 
 	var tempQObj = game.triviaObjectArray[game.questionNbr];
-	$("#gameContainer").append("<div id='questionText'>" + tempQObj.question + "</div>");
-	$("#gameContainer").append("<div id='answerChoices'></div>");
+	$("#gameContainer").append("<div id='questionText' class='col-md-12'>" + tempQObj.question + "</div>");
+	$("#gameContainer").append("<div id='answerChoices' class='col-md-8'></div>");
 
-	var fcDiv = "<div class='form-check'>";
+	var fcDiv = "<div class='form-check col-md-12'>";
 	var fcLabel = "<label class='form-check-label'>";
 	var fcInput = "<input class='form-check-input' type='radio' name='multiChoice' id='multiChoice-";
 	var fcClose = "</span></label></div>";
 
 	for (var i = 0, j = 1; i < tempQObj.answerChoices.length; i++, j++) {
 		$("#gameContainer").append(fcDiv + fcLabel + fcInput + j + "' value='option" +
-									 j + "'><span>" + tempQObj.answerChoices[i] + fcClose);
-		// console.log(fcDiv + fcLabel + fcInput + j + "' value='option" + j + "'>" + tempQObj.answerChoices[i] + fcClose);
-		// $("#multiChoice-" + j).html(tempQObj.answerChoices[i]);
-		console.log(tempQObj.answerChoices[i]);
-		// $(".form-check-input").attr("id", "multiChoice-" + j);
-		// $(".form-check-input").attr("value", "option" + j);
-		var what = $("#multiChoice-" + j).next().html();
-		// console.log($("#multiChoice-" + j));
-		console.log(what);
-		// $("#multiChoice-" + j).attr("onclick","chkAnswer()");
+									 j + "'><span class='radioTxt'>" + tempQObj.answerChoices[i] + fcClose);
 	}
 	game.addRadioListener();
 },
 
+//function to listen for radio button input, and stop timer if so
 addRadioListener: function() {
-	// $(document).ready(function(){
     	$('input[type=radio]').click(function(){
-        console.log($(this).next().html());
-        	// alert(this.value);
         game.checkAnswer(this);
         game.stopQCountDown();
-    // });
-});
-
+	});
 
 },
 
-//function to decide if response is accurate
-
+//function to decide if response is accurate and set message to display
 checkAnswer: function(select) {
 
 	var tempAnswer = select;
 	var tempQObj = game.triviaObjectArray[game.questionNbr];
 
 	if ($(tempAnswer).next().html() === tempQObj.correctAns()) {
-		console.log("it matches!");
 		game.correctAnswers++;
 		game.setMessage(game.msgCorrectResponse);
 	}
@@ -233,53 +184,42 @@ checkAnswer: function(select) {
 
 	else {game.setMessage(game.msgOutOfTime);
 	}
-	// var tempQObj = game.triviaObjectArray[game.questionNbr];
-	if ($('input[type=radio]:checked').length > 0) {
-		console.log("something was checked");
-	}
-	else {console.log("nothing was checked");
-	}
 	
-	// if
-
 },
 
-//function to display correct answer and image
-
+//function to display correct answer, message and image, and kick off answer timer
 displayAnswer: function() {
-	console.log("Display Answer");
 	
 	var tempQObj = game.triviaObjectArray[game.questionNbr];
 	var tempAnswer = tempQObj.correctAns();
 	var tempImg = tempQObj.imgSrc;
 
-	$("#gameContainer").empty();
-	$("#gameContainer").append("<div>" + game.endOfRndMessage + "</div>");
-	$("#gameContainer").append("<div>The correct answer is: " + tempAnswer + "</div>");
-	$("#gameContainer").append("<div><img src='" + tempImg + "'></div>");
+	game.resetDisplay();
+	$("#gameContainer").append("<div class='col-md-12' id='answerTxt'>" + game.endOfRndMessage + "</div>");
+	$("#gameContainer").append("<div class='col-md-12' id='answerTxt'>The correct answer is: " + tempAnswer + "</div>");
+	$("#gameContainer").append("<div class='col-md-12'><img src='" + tempImg + "' id='answerImg'></div>");
 
 	game.startACountDown();
 },
 
-//function to display final score
-
+//function to display final score and button to play again
 displayScore: function() {
 	game.resetDisplay();
 	var unanswered = (game.totalQuestions - game.correctAnswers - game.incorrectAnswers);
-	$("#gameContainer").append("<div>Correct Answers: " + game.correctAnswers + "</div>");
-	$("#gameContainer").append("<div>Incorrect Answers: " + game.incorrectAnswers + "</div>");
-	$("#gameContainer").append("<div>Unanswered Questions: " + unanswered + "</div>");
-	$("#gameContainer").append("<div id='resetBtn'><button id='reset'>Start Over</button></div>");
+	$("#gameContainer").append("<div class='col-md-12' id='scoreTxt'>Correct Answers: " + game.correctAnswers + "</div>");
+	$("#gameContainer").append("<div class='col-md-12' id='scoreTxt'>Incorrect Answers: " + game.incorrectAnswers + "</div>");
+	$("#gameContainer").append("<div class='col-md-12' id='scoreTxt'>Unanswered Questions: " + unanswered + "</div>");
+	$("#gameContainer").append("<div id='resetBtn' class='col-md-12'><button id='reset' class='btn btn-success'>START OVER</button></div>");
 	$("#reset").on("click", game.resetGame);
 },
 
-//function to reset messages
+//function to reset answer messages
 resetMessage: function () {
 	game.endOfRndMessage = "";
 
 },
 
-//function to display messages
+//function to display random answer messages
 setMessage: function(msgArray) {
 	var tempArray = msgArray;
 	var tempIndex = (Math.floor(Math.random() * tempArray.length));
@@ -287,44 +227,36 @@ setMessage: function(msgArray) {
 },
 
 //function to time questions
-
 questionCountDown: function() {
 
     if (game.questionTimer > 0) {
     game.questionTimer--;
 	$("#countDown").html(game.questionTimer);
-  	console.log("Tick Tock");
   }
   else {
-  	// game.checkAnswer();
   	game.stopQCountDown();
 
   }
 },
 
+//function to start and display timer on question
 startQCountDown: function() {
 
-	$("#gameContainer").append("<div>Time Remaining: <span id='countDown'>" + 
+	$("#gameContainer").append("<div class='col-md-12' id='timer'>Time Remaining: <span id='countDown'>" + 
 								game.questionTimer + "</span> seconds</div>");
 
     qInterval = setInterval(game.questionCountDown, 1000);
-        // clockRunning = true;
-    console.log("Timer Started");
   },
 
+//function to stop question timer
  stopQCountDown: function() {
 
     clearInterval(qInterval);
    	game.resetTimer();
-    // clockRunning = false;
-    console.log("Time's Up");
     game.displayAnswer();
   },
 
-
-
-//function to time answers
-
+//function to time answer display
 startACountDown: function() {
 	setTimeout(game.nextQuestion, 1000 * game.answerTimer);
 
@@ -332,15 +264,9 @@ startACountDown: function() {
 
 };
 
-// var chkAnswer = function() {
 
-// 	game.checkAnswer();
-
-// };
-
-	$("#gameContainer").append("<div id='startBtn'><button id='start'>Start</button></div>");
+	$("#gameContainer").append("<div id='startBtn' class='col-md-12'><button id='start' class='btn btn-success'>START</button></div>");
 	
   	$("#start").on("click", game.start);
-  	// $(".form-check-input").on("click", chkAnswer);
 
 });

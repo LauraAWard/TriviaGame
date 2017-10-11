@@ -1,0 +1,125 @@
+body {
+	background-image: url("../images/SesameStreetSignTilt.jpg");
+	font-family: 'Dosis', sans-serif;
+
+}
+
+h1, h4 {
+	text-align: center;
+	color: White;
+
+}
+
+footer {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+}
+
+
+.jumbotron {
+	background-color: Green;
+	color: White;
+
+}
+
+#gameBox {
+	background-color: Yellow;
+	border-style: solid;
+	border-color: Green;
+	border-width: 3px;
+
+}
+
+#gameContainer {
+	padding-top: 50px;
+	padding-bottom: 50px;
+
+}
+
+#bottom-banner {
+	background-image: url("../images/footer_sesamestreet_small.jpg");
+	height: 200px;
+	text-align: center;
+	padding-top: 75px;
+
+}
+
+#answerImg {
+	margin: 20px;
+	width: 250px;
+	height: 250px;
+	border-style: solid;
+	border-color: Green;
+	border-width: 2px;
+	text-align: center;
+	margin-left: calc(50% - 125px);
+
+}
+
+#startBtn {
+	text-align: center;
+
+}
+
+#resetBtn {
+	padding-top: 20px;
+	text-align: center;
+}
+
+#questionText {
+	padding-top: 20px;
+	color: Green;
+	font-size: 20px;
+	text-align: center;
+
+}
+
+#answerChoices {
+	padding: 20px;
+	text-align: center;
+	padding-left: 30px;
+
+}
+
+.form-check {
+	color: Green;
+	padding-left: 40%;
+
+}
+
+.radioTxt {
+	color: Green;
+
+}
+
+#scoreTxt {
+	padding-bottom: 10px;
+	color: Green;
+	font-size: 20px;
+	text-align: center;
+
+}
+
+#answerTxt {
+	padding-bottom: 10px;
+	color: Green;
+	font-size: 20px;
+	text-align: center;
+
+}
+
+#timer {
+	padding-bottom: 10px;
+	color: Green;
+	font-size: 15px;
+	text-align: center;
+
+}
+
+#gameTbl {
+	padding-bottom: 250px;
+
+}
